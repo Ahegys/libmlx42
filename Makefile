@@ -48,12 +48,6 @@ $(BUILDS)/%.o: %.c
 	@printf "Building ... %s\n" $@
 	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@ $(DEPFLAGS) $(@:.o=.d)
 
-valgrind: $(NAME)
-	clear && valgrind $(VALFLAGS) ./philo $(ARGS)
-
-test: $(NAME)
-	clear &&  valgrind --tool=helgrind ./philo $(ARGS)
-
 .PHONY: all clean fclean re
 
 -include $(DEP)

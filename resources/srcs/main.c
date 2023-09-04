@@ -1,26 +1,45 @@
-// -----------------------------------------------------------------------------
-// Codam Coding College, Amsterdam @ 2022-2023 by W2Wizard.
-// See README in the root project for more information.
-// -----------------------------------------------------------------------------
 #include "../includes/structs.h"
 #include "../includes/engine.h"
 
 void	button(t_mlx *src, t_btn *props)
 {
+	int		i;
+	int		j;
+
+	i = 0;
+	while (i <= props->width)
+	{
+		j = -1;
+		while (++j <= props->height)
+			mlx_put_pixel(src->img, props->x + i, props->y + j, props->color);	
+		i++;
+	}
+}
+
+void	mouse_event_listener(t_mlx *mlx, void (*hover_map)(t_mlx *, void *),void *props)
+{
+	int		pos_x;
+	int		pos_y;
 	
+	pos_x = 0;
+	pos_y = 0;
+	mlx_get_mouse_pos(mlx->mlx, &pos_x, &pos_y);
+	hover_map(mlx, props);
+	printf("pos_x: %i | pos_y: %i \n", pos_x, pos_y);
 }
 
 void	render(void *data)
 {
 	t_mlx	*mlx;
 	mlx = (t_mlx *)data;
-
+	mouse_event_listener(mlx, &button,  &(t_btn){"Hello Btn", HEIGHT / 2, WIDTH / 2, 0xffffff, 0, 25, 45});
 }
 
 int main(int ac, char *av[])
 {
 	(void)av;
 	t_mlx	engine;
+
 	engine.height = HEIGHT;
 	engine.width = WIDTH;
 	if (ac < 2)

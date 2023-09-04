@@ -20,7 +20,8 @@ typedef struct s_btn
 	int		y;
 	int 	color;
 	int		background;
-	int		size;
+	int		width;
+	int		height;
 }			t_btn;
 
 #endif // !STRUCTS_H

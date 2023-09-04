@@ -7,13 +7,15 @@ void	button(t_mlx *src, void	*get)
 	int		j;
 	t_props	*props;
 	mlx_image_t		*img;
-	int			color;
+	long long		color;
 
 	props = (t_props *)get;
 	color = props->color;
 	i = 0;
 	if (props->is_hover == TRUE)
 		color = props->hover.color;	
+	if (props->click == TRUE)
+		color = 255255000;
 	while (i <= props->width)
 	{
 		j = -1;
@@ -41,14 +43,14 @@ void	mouse_event_listener(t_mlx *mlx, t_event *event)
     if (event->props->is_hover)
     {
     	if (mlx_is_mouse_down(mlx->mlx, MLX_MOUSE_BUTTON_LEFT))
+    	{
     		printf("Mouse click in area button!\n");
+    		event->props->click = TRUE;
+    	}
     	printf("mouse in button area!\n");
     }
-    else
-	{
-        printf("pos_x: %i | pos_y: %i \n", pos_x, pos_y);
-    }
     event->callback(mlx, event->props);
+   	event->props->click = FALSE;
 }
 
 void	render(void *data)
@@ -58,8 +60,8 @@ void	render(void *data)
 	t_event	event;
 	t_effects effect;
 
-	effect.color = 0xaaaaaa;
-	event.props = &(t_props){"Hello Btn", HEIGHT / 2, WIDTH / 2, 0xffffff, 60, 45, 0, effect,1};
+	effect.color = 255;
+	event.props = &(t_props){"Hello Btn", HEIGHT / 2, WIDTH / 2, 0xffffff, 60, 45, 0, effect,1, FALSE};
 	event.callback = &button;
 	mouse_event_listener(mlx, &event);
 }

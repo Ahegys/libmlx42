@@ -31,6 +31,7 @@ typedef struct s_props
 	int			is_hover;
 	t_effects	hover;
 	int			active_hover;
+	int			click;
 }			t_props;
 
 typedef struct	s_event
